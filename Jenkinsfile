@@ -1,7 +1,10 @@
 node('master') {
     stage("Fetch Source Code") {
-        git 'https://github.com/rajatmshukla/python-jenkins-pipeline'
+        cleanWS()
+        git([url:'https://github.com/rajatmshukla/python-jenkins-pipeline',branch:'add-functions-and-tests'])
     }
+    dir('.'){
+        printMessage('running pipeline')
         stage("Testing") {
             bat 'python test_functions.py'
         }
@@ -11,7 +14,7 @@ node('master') {
             } else {
                 printMessage("No deployment for branch [${env.BRANCH_NAME}]")
             }
-            
+        }
         }
         printMessage('Pipeline Complete')
     
